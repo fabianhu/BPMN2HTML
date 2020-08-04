@@ -2,6 +2,10 @@
 This is a converter from [Camunda BPMN](https://camunda.com/download/modeler/) to [HTML](diagram.html) 
 to enable viewing without any extra tool.
 
+Includes a clickable map and a list of the documentation, which is not visible in the image alone.
+
+![Clickable Map](screenshot.png)
+
 ## Usage
 * Create a model of your favourite business process in [camunda modeler](https://camunda.com/download/modeler/)
 * In the Properties Panel fill the "General - Documentation" field of an element
@@ -12,7 +16,7 @@ to enable viewing without any extra tool.
 
 ## Output is a simple HTML page with
 * Original image on top
-* Image as with HTML image map highlighted in red
+* Downsized image as with HTML image map and highlights in red
 * Mouse-over with the "Documentation" content of the model of every highlighted element
 * List of all Items in file - sequence 
     * "Documentation" content of the model
