@@ -12,7 +12,7 @@ Includes a clickable map and a list of the documentation, which is not visible i
 * Use "Extensions - Properties - Add" property with name "link" to add a link to external target or documentation
 * Save as .bpmn file to a known location
 * Export as image (.png) into the same directory (required)
-* Run [BPMN2HTML](bpmn2html.py) in this directory, it will convert all .bpmn files, which have a .png with equal name
+* Run [bpmn2html.py](bpmn2html.py) in this directory, it will convert all .bpmn files, which have a .png with equal name
 
 ## Output is a simple HTML page with
 * Original image on top
