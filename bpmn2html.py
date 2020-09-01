@@ -186,12 +186,12 @@ def gen_table_of_docks(tree):
                 retstring += '      <tr>\n'
                 retstring += '        <td><a name="{}">'.format(tree['id'])
                 if 'name' in tree:
-                    retstring += '{}'.format(tree['name'])
+                    retstring += enc('{}'.format(tree['name']))
                 else:
-                    retstring += '"{}" has no name'.format(tree['id'])
+                    retstring += enc('"{}" has no name'.format(enc(tree['id'])))
                 retstring += '</a></td>\n'
                 if 'documentation' in tree:
-                    retstring += '        <td>{}</td>\n'.format(tree['documentation'])
+                    retstring += '        <td>{}</td>\n'.format(enc(tree['documentation']))
                 else:
                     retstring += '        <td></td>\n'
                 if 'link' in tree:
