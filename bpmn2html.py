@@ -1,14 +1,16 @@
 #!/usr/bin/python3
 
+# if numpy does complain about being not installed: python -mpip install numpy
+
 import os
 import sys
-import json                             #for debug
-import numpy as np
+import json  # for debug
+import numpy as np  # fixme add autoinstall for all modules !?
 from xml.etree import ElementTree
 from datetime import datetime
 from contextlib import contextmanager
 
-# BEGINN installation process
+# BEGIN installation process
 @contextmanager
 def suppress_stdout():
     with open(os.devnull, "w") as devnull:
@@ -19,14 +21,17 @@ def suppress_stdout():
         finally:
             sys.stdout = old_stdout
 
+
 try:
     from pip import main as pipmain
 except ImportError:
     from pip._internal import main as pipmain
 
+
 def install(package):
     print("Try to install {} over pip".format(package))
     print(pipmain(['install', package]))
+
 
 try:
     import cv2
@@ -34,8 +39,8 @@ except ModuleNotFoundError as e:
     try:
         install('opencv-python')
     except Exception as e:
-            print('Can\'t install {}:{}'.format('openCV-python', e))
-            raise(e)
+        print('Can\'t install {}:{}'.format('openCV-python', e))
+        raise (e)
 
 import cv2
 
@@ -43,15 +48,15 @@ import cv2
 
 mult = 3  # fixed value to multiply xml values to get the image values
 # every tag with string in it, will be painted:
-tagstopaint = {'Event':'circle',
-               'task':'rect',
-               'Gateway':'poly',
-               'dataStore':'rect',
-               'dataObject':'rect',}
+tagstopaint = {'Event': 'circle',
+               'task': 'rect',
+               'Gateway': 'poly',
+               'dataStore': 'rect',
+               'dataObject': 'rect', }
 
 
 def enc(st):
-    '''encode strings for htm'''
+    """encode strings for htm"""
     st = st.replace("\"", '&quot;')
     encod = st.encode(encoding="ascii", errors="xmlcharrefreplace")
     decod = encod.decode("utf-8")
@@ -60,9 +65,10 @@ def enc(st):
 
 # read xml for max size
 def parse_bpmn_bounds(xmlroot, namespace):  # -> (x,y)
-    '''Read the shape of the image descripted in the xml the bounds'''
+    """Read the shape of the image descripted in the xml the bounds"""
     bounds = xmlroot.findall("bpmndi:BPMNDiagram/bpmndi:BPMNPlane/bpmndi:BPMNShape/dc:Bounds", namespace)
-    bounds = bounds + xmlroot.findall("bpmndi:BPMNDiagram/bpmndi:BPMNPlane/bpmndi:BPMNShape/bpmndi:BPMNLabel/dc:Bounds", namespace)
+    bounds = bounds + xmlroot.findall("bpmndi:BPMNDiagram/bpmndi:BPMNPlane/bpmndi:BPMNShape/bpmndi:BPMNLabel/dc:Bounds",
+                                      namespace)
 
     # find the outer bounds
     xmin = 30000
@@ -87,52 +93,53 @@ def parse_bpmn_bounds(xmlroot, namespace):  # -> (x,y)
 
 
 def build_tree(xmlroot):
-    '''build the elemental tree from the xml description'''
-    childrens = xmlroot.getchildren()
+    """build the elemental tree from the xml description"""
+    children = list(xmlroot)
     cds = []
     tree = {}
-    for cd in childrens:
+    for cd in children:
         cds.append(build_tree(cd))
     tree['tag'] = xmlroot.tag.split('}')[1]
     if len(cds) != 0:
         j = 0
         for i in cds:
             if 'tag' in i:
-                if i['tag'] == 'property' and i['name'] == 'link':
+                if i['tag'] == 'property' and 'name' in i and i['name'] == 'link':
                     tree['link'] = cds.pop(j)['value']
                 if i['tag'] == 'documentation':
                     tree['documentation'] = cds.pop(j)['text']
                 if i['tag'] == 'properties' and 'link' in i:
                     tree['link'] = cds.pop(j)['link']
-            j+=1
+            j += 1
         j = 0
         for i in cds:
             if i['tag'] == 'extensionElements':
                 if 'link' in cds[j]:
                     tree['link'] = cds.pop(j)['link']
-            j+=1
+            j += 1
         j = 0
-        if len(cds) !=0:
+        if len(cds) != 0:
             tree['subelements'] = cds
     text = xmlroot.text
-    if text != None:
+    if text is not None:
         tree['text'] = text
     id = xmlroot.get('id')
-    if id != None:
+    if id is not None:
         tree['id'] = id
     name = xmlroot.get('name')
-    if name != None:
+    if name is not None:
         tree['name'] = name
     value = xmlroot.get('value')
-    if value != None:
+    if value is not None:
         tree['value'] = value
     documentation = xmlroot.find('bpmn:documentation')
-    if documentation != None:
+    if documentation is not None:
         tree['documentation'] = documentation.text
     return tree
 
+
 def paint_coords(image, tree, scaleperc):
-    '''paint the href-tags as shapes to the image'''
+    """paint the href-tags as shapes to the image"""
     if 'subelements' in tree:
         for se in tree['subelements']:
             paint_coords(image, se, scaleperc)
@@ -146,16 +153,16 @@ def paint_coords(image, tree, scaleperc):
                     w = tree['bounds']['w']
                     if tagstopaint[t] == 'circle':
                         cv2.circle(image, (int(x + (w / 2)), int(y + (h / 2))), int(h / 2), (0, 20, 200), 10)
-                        tree['mapcoords'] = str(int((x+(w/2)) * (scaleperc / 100))) + "," + \
-                                            str(int((y+(h/2)) * (scaleperc / 100))) + "," + \
-                                            str(int((h/2) * (scaleperc / 100)))
+                        tree['mapcoords'] = str(int((x + (w / 2)) * (scaleperc / 100))) + "," + \
+                                            str(int((y + (h / 2)) * (scaleperc / 100))) + "," + \
+                                            str(int((h / 2) * (scaleperc / 100)))
                         tree['mapshape'] = 'circle'
                     elif tagstopaint[t] == 'rect':
-                        cv2.rectangle(image, (int(x), int(y)), (int(x+w), int(y+h)), (0, 20, 200), 10)
+                        cv2.rectangle(image, (int(x), int(y)), (int(x + w), int(y + h)), (0, 20, 200), 10)
                         tree['mapcoords'] = str(int(x * (scaleperc / 100))) + "," + \
                                             str(int(y * (scaleperc / 100))) + "," + \
-                                            str(int((x+w) * (scaleperc / 100))) + "," + \
-                                            str(int((y+h) * (scaleperc / 100)))
+                                            str(int((x + w) * (scaleperc / 100))) + "," + \
+                                            str(int((y + h) * (scaleperc / 100)))
                         tree['mapshape'] = 'rect'
                     elif tagstopaint[t] == 'poly':
                         rombus = np.array([(int(x + w / 2), int(y)),
@@ -163,19 +170,19 @@ def paint_coords(image, tree, scaleperc):
                                            (int(x + w / 2), int(y + h)),
                                            (int(x), int(y + h / 2))])
                         cv2.drawContours(image, [rombus], -1, (0, 20, 200), 10)
-                        tree['mapcoords'] = str(int((x+(w/2)) * (scaleperc / 100))) + "," + \
+                        tree['mapcoords'] = str(int((x + (w / 2)) * (scaleperc / 100))) + "," + \
                                             str(int(y * (scaleperc / 100))) + "," + \
-                                            str(int((x+w) * (scaleperc / 100))) + "," + \
-                                            str(int((y+(h/2)) * (scaleperc / 100))) + "," + \
-                                            str(int((x+(w/2)) * (scaleperc / 100))) + "," + \
-                                            str(int((y+h) * (scaleperc / 100))) + "," + \
-                                            str(int(x * (scaleperc / 100)))+ "," + \
-                                            str(int((y+(h/2)) * (scaleperc / 100)))
+                                            str(int((x + w) * (scaleperc / 100))) + "," + \
+                                            str(int((y + (h / 2)) * (scaleperc / 100))) + "," + \
+                                            str(int((x + (w / 2)) * (scaleperc / 100))) + "," + \
+                                            str(int((y + h) * (scaleperc / 100))) + "," + \
+                                            str(int(x * (scaleperc / 100))) + "," + \
+                                            str(int((y + (h / 2)) * (scaleperc / 100)))
                         tree['mapshape'] = tagstopaint[t]
 
 
 def gen_table_of_docks(tree):
-    '''generate the dokumentation table for the html'''
+    """generate the dokumentation table for the html"""
     retstring = ''
     if 'subelements' in tree:
         for se in tree['subelements']:
@@ -203,7 +210,7 @@ def gen_table_of_docks(tree):
 
 
 def get_bounds(xmlroot, id, namespace, xoffs, yoffs):
-    '''Get bounds information from xmlelement'''
+    """Get bounds information from xmlelement"""
     test = xmlroot.find(".//bpmndi:BPMNShape[@bpmnElement='" + id + "']", namespace)
     if test is None:  # processes do not deliver coordinates.
         return None
@@ -215,8 +222,9 @@ def get_bounds(xmlroot, id, namespace, xoffs, yoffs):
     h = float(test.get("height")) * mult
     return {'x': int(x), 'y': int(y), 'w': int(w), 'h': int(h)}
 
+
 def read_bounds(tree, xmlroot, namespace, xoffs, yoffs):
-    '''search bound information and insert it in to the tree element'''
+    """search bound information and insert it in to the tree element"""
     if 'subelements' in tree:
         for se in tree['subelements']:
             read_bounds(se, xmlroot, namespace, xoffs, yoffs)
@@ -225,8 +233,9 @@ def read_bounds(tree, xmlroot, namespace, xoffs, yoffs):
         if bounds != None:
             tree['bounds'] = get_bounds(xmlroot, tree['id'], namespace, xoffs, yoffs)
 
+
 def get_diagrammmap(tree):
-    '''return map elements extracted from the tree'''
+    """return map elements extracted from the tree"""
     retstring = ''
     if 'subelements' in tree:
         for sub in tree['subelements']:
@@ -244,16 +253,16 @@ def get_diagrammmap(tree):
             if 'mapcoords' in tree:
                 return '      <area shape="' + tree['mapshape'] + \
                        '" coords="' + tree['mapcoords'] + '" href="#' + \
-                       tree['id'] + '" title="' + enc(name)+enc(doc) + \
+                       tree['id'] + '" title="' + enc(name) + enc(doc) + \
                        '">\n' + retstring
     return retstring
 
 
 def parse_TasksAndData(xmlroot, image, scaleperc, namespace, xoffs, yoffs):
-    '''build the elemental tree and draw the shapes on the image'''
+    """build the elemental tree and draw the shapes on the image"""
     global eltree
     eltree = build_tree(xmlroot)
-   #For Debug you can write the tree to a file
+    # For Debug you can write the tree to a file
     read_bounds(eltree, xmlroot, namespace, xoffs, yoffs)
     f = open('file.json', 'w')
     f.write(json.dumps(eltree, indent=4, sort_keys=True))
@@ -262,14 +271,14 @@ def parse_TasksAndData(xmlroot, image, scaleperc, namespace, xoffs, yoffs):
 
 
 def processFile(filexml):
-    '''read the given xml file and associated image and generate the html version'''
+    """read the given xml file and associated image and generate the html version"""
     xmlnamespace = {
-    'xsi' : "http://www.w3.org/2001/XMLSchema-instance",
-    'bpmn' : "http://www.omg.org/spec/BPMN/20100524/MODEL",
-    'bpmndi' : "http://www.omg.org/spec/BPMN/20100524/DI",
-    'dc' : "http://www.omg.org/spec/DD/20100524/DC",
-    'di' : "http://www.omg.org/spec/DD/20100524/DI",
-    'camunda' : "http://camunda.org/schema/1.0/bpmn"}
+        'xsi': "http://www.w3.org/2001/XMLSchema-instance",
+        'bpmn': "http://www.omg.org/spec/BPMN/20100524/MODEL",
+        'bpmndi': "http://www.omg.org/spec/BPMN/20100524/DI",
+        'dc': "http://www.omg.org/spec/DD/20100524/DC",
+        'di': "http://www.omg.org/spec/DD/20100524/DI",
+        'camunda': "http://camunda.org/schema/1.0/bpmn"}
 
     print("processing file", filexml)
 
@@ -284,9 +293,10 @@ def processFile(filexml):
 
     resizedimagewidth = 1850
 
-    scale_percent = 100*(resizedimagewidth / float(image_master.shape[1])) # percent of original size for resizedimagewidth width
+    scale_percent = 100 * (resizedimagewidth / float(
+        image_master.shape[1]))  # percent of original size for resizedimagewidth width
 
-    tree = ElementTree.parse(filebase+".bpmn")
+    tree = ElementTree.parse(filebase + ".bpmn")
     root = tree.getroot()
     xmlwidth, xmlheight, xmin, ymin = parse_bpmn_bounds(root, xmlnamespace)
 
@@ -299,15 +309,15 @@ def processFile(filexml):
     height = int(image_master.shape[0] * scale_percent / 100)
     dim = (width, height)
     otherimg = cv2.resize(image_master, dim, cv2.INTER_AREA)
-    cv2.imwrite(filebase+"_k.png", otherimg)
+    cv2.imwrite(filebase + "_k.png", otherimg)
 
-    f = open(filebase+".html", "w")
+    f = open(filebase + ".html", "w")
     f.write('''
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>'''+filexml+'''</title>
+    <title>''' + filexml + '''</title>
     <meta name="viewport" content="width=device-width">
   </head>
   <style>
@@ -324,15 +334,15 @@ def processFile(filexml):
   </style>      
   <body>
     <!-- page content -->    
-    <h1> '''+filexml+'</h1>'+ datetime.now().strftime("%Y-%m-%d %H:%M:%S") +'''
+    <h1> ''' + filexml + '</h1>' + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '''
     <p>
-      <img src="'''+filebase+"_k.png"+'''" alt="The Process" usemap="#diagrammap" border="0" >
+      <img src="''' + filebase + "_k.png" + '''" alt="The Process" usemap="#diagrammap" border="0" >
     </p>
     <map name="diagrammap">
 ''')
     f.write(get_diagrammmap(eltree))
     f.write('''    </map>
-    <table style="width:'''+str(resizedimagewidth)+'''px">
+    <table style="width:''' + str(resizedimagewidth) + '''px">
       <tr>
         <th style="width:200px">name</th>
         <th>documentation</th> 
@@ -352,4 +362,3 @@ def processFile(filexml):
 for file in os.listdir("."):
     if file.endswith(".bpmn"):
         processFile(file)
-

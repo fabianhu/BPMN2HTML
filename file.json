@@ -1,0 +1,973 @@
+{
+    "id": "Definitions_0lwa9gp",
+    "subelements": [
+        {
+            "documentation": "This is the documentation of the \"background\"",
+            "id": "Collaboration_1dh3q2u",
+            "subelements": [
+                {
+                    "bounds": {
+                        "h": 1260,
+                        "w": 3882,
+                        "x": 18,
+                        "y": 18
+                    },
+                    "id": "Participant_1uamuja",
+                    "name": "My Pool",
+                    "tag": "participant"
+                },
+                {
+                    "bounds": {
+                        "h": 570,
+                        "w": 1050,
+                        "x": 1680,
+                        "y": 633
+                    },
+                    "documentation": "This is a much too short\ndescription of\nthe Group",
+                    "id": "Group_03batmv",
+                    "tag": "group",
+                    "text": "\n      "
+                }
+            ],
+            "tag": "collaboration",
+            "text": "\n    "
+        },
+        {
+            "id": "Process_0ml4pf9",
+            "subelements": [
+                {
+                    "id": "LaneSet_0h5dkq2",
+                    "subelements": [
+                        {
+                            "bounds": {
+                                "h": 540,
+                                "w": 3792,
+                                "x": 108,
+                                "y": 18
+                            },
+                            "documentation": "Description of Lane A",
+                            "id": "Lane_1022u6m",
+                            "name": "Lane A",
+                            "subelements": [
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "StartEvent_190t21w"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Activity_1u0g2vz"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Activity_0kxfri6"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Activity_0tqwym8"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Gateway_1gmuinm"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Activity_1n1soi1"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Gateway_04ox0qa"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Activity_03jiok1"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Event_0ez07sa"
+                                }
+                            ],
+                            "tag": "lane",
+                            "text": "\n        "
+                        },
+                        {
+                            "bounds": {
+                                "h": 720,
+                                "w": 3792,
+                                "x": 108,
+                                "y": 558
+                            },
+                            "documentation": "Description of Lane B",
+                            "id": "Lane_1car9pq",
+                            "name": "Lane B",
+                            "subelements": [
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Activity_1twc63o"
+                                },
+                                {
+                                    "tag": "flowNodeRef",
+                                    "text": "Activity_1p9zffs"
+                                }
+                            ],
+                            "tag": "lane",
+                            "text": "\n        "
+                        }
+                    ],
+                    "tag": "laneSet",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 108,
+                        "w": 108,
+                        "x": 168,
+                        "y": 294
+                    },
+                    "documentation": "This is a much too short\ndescription of\nStart",
+                    "id": "StartEvent_190t21w",
+                    "name": "Start",
+                    "subelements": [
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_0k4bk73"
+                        }
+                    ],
+                    "tag": "startEvent",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 240,
+                        "w": 300,
+                        "x": 450,
+                        "y": 228
+                    },
+                    "documentation": "This is a much too short\ndescription of\nStep1",
+                    "id": "Activity_1u0g2vz",
+                    "link": "https://github.com",
+                    "name": "Step1",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_0k4bk73"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_0ny8h8p"
+                        },
+                        {
+                            "id": "DataOutputAssociation_01z9225",
+                            "subelements": [
+                                {
+                                    "tag": "targetRef",
+                                    "text": "DataStoreReference_0rixd1w"
+                                }
+                            ],
+                            "tag": "dataOutputAssociation",
+                            "text": "\n        "
+                        }
+                    ],
+                    "tag": "task",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 240,
+                        "w": 300,
+                        "x": 930,
+                        "y": 228
+                    },
+                    "documentation": "This is a much too short\ndescription of\nStep2",
+                    "id": "Activity_0kxfri6",
+                    "name": "Step2",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_0ny8h8p"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_03ybv10"
+                        },
+                        {
+                            "id": "Property_04pwgi4",
+                            "name": "__targetRef_placeholder",
+                            "tag": "property"
+                        },
+                        {
+                            "id": "DataInputAssociation_0q0xsrz",
+                            "subelements": [
+                                {
+                                    "tag": "sourceRef",
+                                    "text": "DataObjectReference_1aji22s"
+                                },
+                                {
+                                    "tag": "targetRef",
+                                    "text": "Property_04pwgi4"
+                                }
+                            ],
+                            "tag": "dataInputAssociation",
+                            "text": "\n        "
+                        }
+                    ],
+                    "tag": "task",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 240,
+                        "w": 300,
+                        "x": 1410,
+                        "y": 228
+                    },
+                    "documentation": "This is a much too short\ndescription of\nStep3",
+                    "id": "Activity_0tqwym8",
+                    "name": "Step3",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_03ybv10"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_1b1mak1"
+                        },
+                        {
+                            "id": "DataOutputAssociation_0wxwm9c",
+                            "subelements": [
+                                {
+                                    "tag": "targetRef",
+                                    "text": "DataStoreReference_0jmzg7b"
+                                }
+                            ],
+                            "tag": "dataOutputAssociation",
+                            "text": "\n        "
+                        }
+                    ],
+                    "tag": "task",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 150,
+                        "w": 150,
+                        "x": 1905,
+                        "y": 273
+                    },
+                    "id": "Gateway_1gmuinm",
+                    "name": "split",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_1b1mak1"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_0qpm4sk"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_1v5ocjc"
+                        }
+                    ],
+                    "tag": "parallelGateway",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 240,
+                        "w": 300,
+                        "x": 2250,
+                        "y": 228
+                    },
+                    "documentation": "This is a much too short\ndescription of\nStep4",
+                    "id": "Activity_1n1soi1",
+                    "name": "Step4",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_0qpm4sk"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_19n67tm"
+                        }
+                    ],
+                    "tag": "task",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 150,
+                        "w": 150,
+                        "x": 2745,
+                        "y": 273
+                    },
+                    "id": "Gateway_04ox0qa",
+                    "name": "join",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_19n67tm"
+                        },
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_0ernwwj"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_11thb2b"
+                        }
+                    ],
+                    "tag": "inclusiveGateway",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 240,
+                        "w": 300,
+                        "x": 3090,
+                        "y": 228
+                    },
+                    "documentation": "This is a much too short\ndescription of\nStep5",
+                    "id": "Activity_03jiok1",
+                    "name": "Step5",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_11thb2b"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_1sc5o27"
+                        }
+                    ],
+                    "tag": "task",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 108,
+                        "w": 108,
+                        "x": 3606,
+                        "y": 294
+                    },
+                    "documentation": "This is a much too short\ndescription of\nTHE END",
+                    "id": "Event_0ez07sa",
+                    "name": "The END",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_1sc5o27"
+                        }
+                    ],
+                    "tag": "endEvent",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 240,
+                        "w": 300,
+                        "x": 1830,
+                        "y": 798
+                    },
+                    "documentation": "This is a much too short\ndescription of\nStep4B",
+                    "id": "Activity_1twc63o",
+                    "name": "Step4B",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_1v5ocjc"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_0nqb6zt"
+                        }
+                    ],
+                    "tag": "task",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 240,
+                        "w": 300,
+                        "x": 2280,
+                        "y": 798
+                    },
+                    "documentation": "This is a much too short\ndescription of\nStep5B\n\n",
+                    "id": "Activity_1p9zffs",
+                    "name": "Step5B",
+                    "subelements": [
+                        {
+                            "tag": "incoming",
+                            "text": "Flow_0nqb6zt"
+                        },
+                        {
+                            "tag": "outgoing",
+                            "text": "Flow_0ernwwj"
+                        }
+                    ],
+                    "tag": "task",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 150,
+                        "w": 150,
+                        "x": 495,
+                        "y": 933
+                    },
+                    "documentation": "This is a much too short\ndescription of\nthe Database 1",
+                    "id": "DataStoreReference_0rixd1w",
+                    "link": "https://github.com/fabianhu",
+                    "name": "Database 1",
+                    "tag": "dataStoreReference",
+                    "text": "\n      "
+                },
+                {
+                    "bounds": {
+                        "h": 150,
+                        "w": 108,
+                        "x": 1026,
+                        "y": 903
+                    },
+                    "documentation": "This is a much too short\ndescription of\na pointless document",
+                    "id": "DataObjectReference_1aji22s",
+                    "link": "https://github.com/fabianhu",
+                    "name": "a document",
+                    "tag": "dataObjectReference",
+                    "text": "\n      "
+                },
+                {
+                    "id": "DataObject_1f5eisj",
+                    "tag": "dataObject"
+                },
+                {
+                    "id": "Flow_0k4bk73",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_0ny8h8p",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_03ybv10",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_1b1mak1",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_0qpm4sk",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_1v5ocjc",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_19n67tm",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_0ernwwj",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_11thb2b",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_1sc5o27",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "id": "Flow_0nqb6zt",
+                    "tag": "sequenceFlow"
+                },
+                {
+                    "bounds": {
+                        "h": 150,
+                        "w": 150,
+                        "x": 1365,
+                        "y": 843
+                    },
+                    "documentation": "This is a much too short\ndescription of\nThe Database2",
+                    "id": "DataStoreReference_0jmzg7b",
+                    "link": "https://github.com/fabianhu",
+                    "name": "Database 2",
+                    "tag": "dataStoreReference",
+                    "text": "\n      "
+                }
+            ],
+            "tag": "process",
+            "text": "\n    "
+        },
+        {
+            "id": "Category_1ixadv0",
+            "subelements": [
+                {
+                    "id": "CategoryValue_0ahniko",
+                    "tag": "categoryValue",
+                    "value": "The name of the Group"
+                }
+            ],
+            "tag": "category",
+            "text": "\n    "
+        },
+        {
+            "id": "BPMNDiagram_1",
+            "subelements": [
+                {
+                    "id": "BPMNPlane_1",
+                    "subelements": [
+                        {
+                            "id": "Participant_1uamuja_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Lane_1car9pq_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Lane_1022u6m_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_0nqb6zt_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_1sc5o27_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_11thb2b_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_0ernwwj_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_19n67tm_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_1v5ocjc_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_0qpm4sk_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_1b1mak1_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_03ybv10_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_0ny8h8p_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Flow_0k4bk73_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "_BPMNShape_StartEvent_2",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                },
+                                {
+                                    "subelements": [
+                                        {
+                                            "tag": "Bounds"
+                                        }
+                                    ],
+                                    "tag": "BPMNLabel",
+                                    "text": "\n          "
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Activity_1u0g2vz_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Activity_0kxfri6_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Activity_0tqwym8_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Gateway_013bpy3_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                },
+                                {
+                                    "subelements": [
+                                        {
+                                            "tag": "Bounds"
+                                        }
+                                    ],
+                                    "tag": "BPMNLabel",
+                                    "text": "\n          "
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Activity_1n1soi1_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Gateway_04xp95a_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                },
+                                {
+                                    "subelements": [
+                                        {
+                                            "tag": "Bounds"
+                                        }
+                                    ],
+                                    "tag": "BPMNLabel",
+                                    "text": "\n          "
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Activity_03jiok1_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Event_0ez07sa_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                },
+                                {
+                                    "subelements": [
+                                        {
+                                            "tag": "Bounds"
+                                        }
+                                    ],
+                                    "tag": "BPMNLabel",
+                                    "text": "\n          "
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Activity_1twc63o_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Activity_1p9zffs_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "DataStoreReference_0rixd1w_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                },
+                                {
+                                    "subelements": [
+                                        {
+                                            "tag": "Bounds"
+                                        }
+                                    ],
+                                    "tag": "BPMNLabel",
+                                    "text": "\n          "
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "DataObjectReference_1aji22s_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                },
+                                {
+                                    "subelements": [
+                                        {
+                                            "tag": "Bounds"
+                                        }
+                                    ],
+                                    "tag": "BPMNLabel",
+                                    "text": "\n          "
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "DataStoreReference_0jmzg7b_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                },
+                                {
+                                    "subelements": [
+                                        {
+                                            "tag": "Bounds"
+                                        }
+                                    ],
+                                    "tag": "BPMNLabel",
+                                    "text": "\n          "
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "Group_03batmv_di",
+                            "subelements": [
+                                {
+                                    "tag": "Bounds"
+                                },
+                                {
+                                    "subelements": [
+                                        {
+                                            "tag": "Bounds"
+                                        }
+                                    ],
+                                    "tag": "BPMNLabel",
+                                    "text": "\n          "
+                                }
+                            ],
+                            "tag": "BPMNShape",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "DataOutputAssociation_01z9225_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "DataInputAssociation_0q0xsrz_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        },
+                        {
+                            "id": "DataOutputAssociation_0wxwm9c_di",
+                            "subelements": [
+                                {
+                                    "tag": "waypoint"
+                                },
+                                {
+                                    "tag": "waypoint"
+                                }
+                            ],
+                            "tag": "BPMNEdge",
+                            "text": "\n        "
+                        }
+                    ],
+                    "tag": "BPMNPlane",
+                    "text": "\n      "
+                }
+            ],
+            "tag": "BPMNDiagram",
+            "text": "\n    "
+        }
+    ],
+    "tag": "definitions",
+    "text": "\n  "
+}
