@@ -10,6 +10,9 @@ from xml.etree import ElementTree
 from datetime import datetime
 from contextlib import contextmanager
 
+paintwidth = 5
+resizedimagewidth = 1200
+
 # BEGIN installation process
 @contextmanager
 def suppress_stdout():
@@ -54,10 +57,16 @@ tagstopaint = {'Event': 'circle',
                'dataStore': 'rect',
                'dataObject': 'rect', }
 
+eltree = dict
 
-def enc(st):
-    """encode strings for htm"""
+
+def enc(st, title=False):
+    """encode strings for html"""
     st = st.replace("\"", '&quot;')
+    if title:
+        st = st.replace("\n", '&#13;')
+    else:
+        st = st.replace("\n", '<br>')
     encod = st.encode(encoding="ascii", errors="xmlcharrefreplace")
     decod = encod.decode("utf-8")
     return decod
@@ -69,7 +78,6 @@ def parse_bpmn_bounds(xmlroot, namespace):  # -> (x,y)
     bounds = xmlroot.findall("bpmndi:BPMNDiagram/bpmndi:BPMNPlane/bpmndi:BPMNShape/dc:Bounds", namespace)
     bounds = bounds + xmlroot.findall("bpmndi:BPMNDiagram/bpmndi:BPMNPlane/bpmndi:BPMNShape/bpmndi:BPMNLabel/dc:Bounds",
                                       namespace)
-
     # find the outer bounds
     xmin = 30000
     xmax = -30000
@@ -84,6 +92,16 @@ def parse_bpmn_bounds(xmlroot, namespace):  # -> (x,y)
         xmax = max(rx + rw, xmax)
         ymin = min(ry, ymin)
         ymax = max(ry + rh, ymax)
+
+    # and now for the arrows
+    bounds = xmlroot.findall("bpmndi:BPMNDiagram/bpmndi:BPMNPlane/bpmndi:BPMNEdge/di:waypoint", namespace)
+    for i in bounds:
+        rx = int(float(i.get('x'))) * mult
+        ry = int(float(i.get('y'))) * mult
+        xmin = min(rx, xmin)
+        xmax = max(rx, xmax)
+        ymin = min(ry, ymin)
+        ymax = max(ry, ymax)
 
     # print("xml off:", xmin, ymin)
     xmlwidth = xmax - xmin
@@ -152,13 +170,13 @@ def paint_coords(image, tree, scaleperc):
                     h = tree['bounds']['h']
                     w = tree['bounds']['w']
                     if tagstopaint[t] == 'circle':
-                        cv2.circle(image, (int(x + (w / 2)), int(y + (h / 2))), int(h / 2), (0, 20, 200), 10)
+                        cv2.circle(image, (int(x + (w / 2)), int(y + (h / 2))), int(h / 2), (0, 20, 200), paintwidth)
                         tree['mapcoords'] = str(int((x + (w / 2)) * (scaleperc / 100))) + "," + \
                                             str(int((y + (h / 2)) * (scaleperc / 100))) + "," + \
                                             str(int((h / 2) * (scaleperc / 100)))
                         tree['mapshape'] = 'circle'
                     elif tagstopaint[t] == 'rect':
-                        cv2.rectangle(image, (int(x), int(y)), (int(x + w), int(y + h)), (0, 20, 200), 10)
+                        cv2.rectangle(image, (int(x), int(y)), (int(x + w), int(y + h)), (0, 20, 200), paintwidth)
                         tree['mapcoords'] = str(int(x * (scaleperc / 100))) + "," + \
                                             str(int(y * (scaleperc / 100))) + "," + \
                                             str(int((x + w) * (scaleperc / 100))) + "," + \
@@ -169,7 +187,7 @@ def paint_coords(image, tree, scaleperc):
                                            (int(x + w), int(y + h / 2)),
                                            (int(x + w / 2), int(y + h)),
                                            (int(x), int(y + h / 2))])
-                        cv2.drawContours(image, [rombus], -1, (0, 20, 200), 10)
+                        cv2.drawContours(image, [rombus], -1, (0, 20, 200), paintwidth)
                         tree['mapcoords'] = str(int((x + (w / 2)) * (scaleperc / 100))) + "," + \
                                             str(int(y * (scaleperc / 100))) + "," + \
                                             str(int((x + w) * (scaleperc / 100))) + "," + \
@@ -181,12 +199,12 @@ def paint_coords(image, tree, scaleperc):
                         tree['mapshape'] = tagstopaint[t]
 
 
-def gen_table_of_docks(tree):
+def gen_table_of_docs(tree):
     """generate the dokumentation table for the html"""
     retstring = ''
     if 'subelements' in tree:
         for se in tree['subelements']:
-            retstring += gen_table_of_docks(se)
+            retstring += gen_table_of_docs(se)
     for i in tagstopaint.keys():
         if i in tree['tag']:
             if 'mapcoords' in tree:
@@ -230,7 +248,7 @@ def read_bounds(tree, xmlroot, namespace, xoffs, yoffs):
             read_bounds(se, xmlroot, namespace, xoffs, yoffs)
     if 'id' in tree:
         bounds = get_bounds(xmlroot, tree['id'], namespace, xoffs, yoffs)
-        if bounds != None:
+        if bounds is not None:
             tree['bounds'] = get_bounds(xmlroot, tree['id'], namespace, xoffs, yoffs)
 
 
@@ -253,7 +271,7 @@ def get_diagrammmap(tree):
             if 'mapcoords' in tree:
                 return '      <area shape="' + tree['mapshape'] + \
                        '" coords="' + tree['mapcoords'] + '" href="#' + \
-                       tree['id'] + '" title="' + enc(name) + enc(doc) + \
+                       tree['id'] + '" title="' + enc(name, True) + "&#13;" + enc(doc, True) + \
                        '">\n' + retstring
     return retstring
 
@@ -272,6 +290,7 @@ def parse_TasksAndData(xmlroot, image, scaleperc, namespace, xoffs, yoffs):
 
 def processFile(filexml):
     """read the given xml file and associated image and generate the html version"""
+    global eltree
     xmlnamespace = {
         'xsi': "http://www.w3.org/2001/XMLSchema-instance",
         'bpmn': "http://www.omg.org/spec/BPMN/20100524/MODEL",
@@ -290,8 +309,6 @@ def processFile(filexml):
         print("no image supplied for", filexml)
         return
     imageheight, imagewidth, _ = image_master.shape
-
-    resizedimagewidth = 1850
 
     scale_percent = 100 * (resizedimagewidth / float(
         image_master.shape[1]))  # percent of original size for resizedimagewidth width
@@ -350,7 +367,7 @@ def processFile(filexml):
       </tr>
 ''')
 
-    f.write(gen_table_of_docks(eltree))
+    f.write(gen_table_of_docs(eltree))
     f.write('''    </table>
   </body>
 </html>
