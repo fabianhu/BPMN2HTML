@@ -24,5 +24,4 @@ Includes a clickable map and a list of the documentation, which is not visible i
 
 ## TODO
 * process in arrow-sequence, not in file-order
-* support sub-processes
 
