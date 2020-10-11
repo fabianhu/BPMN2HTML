@@ -375,7 +375,7 @@ def processFile(filexml):
 
     f.close()
 
-
-for file in os.listdir("."):
-    if file.endswith(".bpmn"):
-        processFile(file)
+if __name__ == “__main__”:
+    for file in os.listdir("."):
+            if file.endswith(".bpmn"):
+                processFile(file)
